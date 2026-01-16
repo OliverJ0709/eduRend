@@ -1,7 +1,9 @@
 
 #include "Scene.h"
+#include "Cube.h"
 #include "QuadModel.h"
 #include "OBJModel.h"
+
 
 Scene::Scene(
 	ID3D11Device* dxdevice,
