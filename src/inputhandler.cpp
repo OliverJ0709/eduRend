@@ -121,6 +121,7 @@ bool InputHandler::Update() noexcept
 	return true;
 }
 
+
 void InputHandler::GetMouseLocation(int& mouseX, int& mouseY) const noexcept
 {
 	mouseX = m_mouse_x;

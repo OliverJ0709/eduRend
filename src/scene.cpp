@@ -1,8 +1,8 @@
 
 #include "Scene.h"
-#include "Cube.h"
 #include "QuadModel.h"
 #include "OBJModel.h"
+#include "cube.h"
 
 
 Scene::Scene(
@@ -40,6 +40,8 @@ OurTestScene::OurTestScene(
 //
 void OurTestScene::Init()
 {
+	
+
 	m_camera = new Camera(
 		45.0f * fTO_RAD,		// field-of-view (radians)
 		(float)m_window_width / m_window_height,	// aspect ratio
@@ -50,8 +52,16 @@ void OurTestScene::Init()
 	m_camera->MoveTo({ 0, 0, 5 });
 
 	// Create objects
-	m_quad = new QuadModel(m_dxdevice, m_dxdevice_context);
+	m_quad = new Cube(m_dxdevice, m_dxdevice_context);
+
+	m_child1 = new Cube(m_dxdevice, m_dxdevice_context);
+	m_child2 = new Cube(m_dxdevice, m_dxdevice_context);
+	m_child3 = new Cube(m_dxdevice, m_dxdevice_context);
+
 	m_sponza = new OBJModel("assets/crytek-sponza/sponza.obj", m_dxdevice, m_dxdevice_context);
+	
+
+
 }
 
 //
@@ -62,6 +72,9 @@ void OurTestScene::Update(
 	float dt,
 	const InputHandler& input_handler)
 {
+	long dx = input_handler.GetMouseDeltaX();
+	long dy = input_handler.GetMouseDeltaY();
+	m_camera->RotateCamera(-dx, -dy);
 	// Basic camera control
 	if (input_handler.IsKeyPressed(Keys::Up) || input_handler.IsKeyPressed(Keys::W))
 		m_camera->Move({ 0.0f, 0.0f, -m_camera_velocity * dt });
@@ -88,6 +101,26 @@ void OurTestScene::Update(
 	m_quad_transform = mat4f::translation(0, 0, 0) *			// No translation
 		mat4f::rotation(-m_angle, 0.0f, 1.0f, 0.0f) *	// Rotate continuously around the y-axis
 		mat4f::scaling(1.5, 1.5, 1.5);				// Scale uniformly to 150%
+
+	m_child1_local =
+		mat4f::translation(3.0f, 0.0f, 0.0f) *
+		mat4f::rotation(m_angle * 2.0f, 0, 1, 0) *
+		mat4f::scaling(0.5f);
+
+	m_child2_local =
+		mat4f::translation(-3.0f, 0.0f, 0.0f) *
+		mat4f::rotation(m_angle * 1.5f, 1, 0, 0) *
+		mat4f::scaling(0.5f);
+
+	m_child3_local =
+		mat4f::translation(0.0f, 2.5f, 0.0f) *
+		mat4f::rotation(m_angle * 3.0f, 0, 0, 1) *
+		mat4f::scaling(0.4f);
+
+	m_child1_world = m_quad_transform * m_child1_local;
+	m_child2_world = m_quad_transform * m_child2_local;
+	m_child3_world = m_quad_transform * m_child3_local;
+
 
 	// Sponza model-to-world transformation
 	m_sponza_transform = mat4f::translation(0, -5, 0) *		 // Move down 5 units
@@ -123,6 +156,17 @@ void OurTestScene::Render()
 	UpdateTransformationBuffer(m_quad_transform, m_view_matrix, m_projection_matrix);
 	m_quad->Render();
 
+
+	UpdateTransformationBuffer(m_child1_world, m_view_matrix, m_projection_matrix);
+	m_child1->Render();
+
+	UpdateTransformationBuffer(m_child2_world, m_view_matrix, m_projection_matrix);
+	m_child2->Render();
+
+	UpdateTransformationBuffer(m_child3_world, m_view_matrix, m_projection_matrix);
+	m_child3->Render();
+
+
 	// Load matrices + Sponza's transformation to the device and render it
 	UpdateTransformationBuffer(m_sponza_transform, m_view_matrix, m_projection_matrix);
 	m_sponza->Render();
@@ -131,6 +175,11 @@ void OurTestScene::Render()
 void OurTestScene::Release()
 {
 	SAFE_DELETE(m_quad);
+
+	SAFE_DELETE(m_child1);
+	SAFE_DELETE(m_child2);
+	SAFE_DELETE(m_child3);
+
 	SAFE_DELETE(m_sponza);
 	SAFE_DELETE(m_camera);
 

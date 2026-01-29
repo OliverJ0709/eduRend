@@ -42,9 +42,10 @@ Cube::Cube(ID3D11Device* dxdevice,
 	indices.push_back(2);
 	indices.push_back(3);
 
+	
 	//Quad Left
 
-	v4.Position = { -0.5, -0.5f, -0.5f };
+	v4.Position = { -0.5, -0.5f, -1.0f };
 	v4.Normal = { 1, 0, 0 };
 	v4.TexCoord = { 0, 0 };
 	v5.Position = { -0.5, -0.5f, 0.0f };
@@ -53,7 +54,7 @@ Cube::Cube(ID3D11Device* dxdevice,
 	v6.Position = { -0.5, 0.5f, 0.0f };
 	v6.Normal = { 1, 0, 0 };
 	v6.TexCoord = { 1, 1 };
-	v7.Position = { -0.5, 0.5f, -0.5f };
+	v7.Position = { -0.5, 0.5f, -1.0f };
 	v7.Normal = { 1, 0, 0 };
 	v7.TexCoord = { 1, 0 };
 
@@ -70,6 +71,120 @@ Cube::Cube(ID3D11Device* dxdevice,
 	indices.push_back(6);
 	indices.push_back(7);
 	
+	//Quad Right
+	v8.Position = { 0.5, -0.5f, 0.0f };
+	v8.Normal = { -1, 0, 0 };
+	v8.TexCoord = { 0, 0 };
+	v9.Position = { 0.5, -0.5f, -1.0f };
+	v9.Normal = { -1, 0, 0 };
+	v9.TexCoord = { 0, 1 };
+	v10.Position = { 0.5, 0.5f, -1.0f };
+	v10.Normal = { -1, 0, 0 };
+	v10.TexCoord = { 1, 1 };
+	v11.Position = { 0.5, 0.5f, 0.0f };
+	v11.Normal = { -1, 0, 0 };
+	v11.TexCoord = { 1, 0 };
+
+	vertices.push_back(v8);
+	vertices.push_back(v9);
+	vertices.push_back(v10);
+	vertices.push_back(v11);
+
+	indices.push_back(8);
+	indices.push_back(9);
+	indices.push_back(11);
+
+	indices.push_back(9);
+	indices.push_back(10);
+	indices.push_back(11);
+
+	////Quad Back
+	v12.Position = { -0.5, -0.5f, -1.0f };
+	v12.Normal = { 0, 0, -1 };
+	v12.TexCoord = { 0, 0 };
+	v13.Position = { 0.5, -0.5f, -1.0f };
+	v13.Normal = { 0, 0, -1 };
+	v13.TexCoord = { 0, 1 };
+	v14.Position = { 0.5, 0.5f, -1.0f };
+	v14.Normal = { 0, 0, -1 };
+	v14.TexCoord = { 1, 1 };
+	v15.Position = { -0.5, 0.5f, -1.0f };
+	v15.Normal = { 0, 0, -1 };
+	v15.TexCoord = { 1, 0 };
+
+
+	vertices.push_back(v12);
+	vertices.push_back(v13);
+	vertices.push_back(v14);
+	vertices.push_back(v15);
+
+
+	indices.push_back(12);
+	indices.push_back(15);
+	indices.push_back(13);
+
+	indices.push_back(13);
+	indices.push_back(15);
+	indices.push_back(14);
+
+	//Quad Top
+	v16.Position = { -0.5, 0.5f, 0.0f };
+	v16.Normal = { 0, 1, 0 };
+	v16.TexCoord = { 0, 0 };
+	v17.Position = { 0.5, 0.5f, 0.0f };
+	v17.Normal = { 0, 1, 0 };
+	v17.TexCoord = { 0, 1 };
+	v18.Position = { 0.5, 0.5f, -1.0f };
+	v18.Normal = { 0, 1, 0 };
+	v18.TexCoord = { 1, 1 };
+	v19.Position = { -0.5, 0.5f, -1.0f };
+	v19.Normal = { 0, 1, 0 };
+	v19.TexCoord = { 1, 0 };
+
+	vertices.push_back(v16);
+	vertices.push_back(v17);
+	vertices.push_back(v18);
+	vertices.push_back(v19);
+
+
+
+	indices.push_back(16);
+	indices.push_back(17);
+	indices.push_back(19);
+
+	indices.push_back(17);
+	indices.push_back(18);
+	indices.push_back(19);
+
+	//Quad Bot
+	v20.Position = { -0.5, -0.5f, 0.0f };
+	v20.Normal = { 0, -1, 0 };
+	v20.TexCoord = { 0, 0 };
+	v21.Position = { 0.5, -0.5f, 0.0f };
+	v21.Normal = { 0, -1, 0 };
+	v21.TexCoord = { 0, 1 };
+	v22.Position = { 0.5, -0.5f, -1.0f };
+	v22.Normal = { 0, -1, 0 };
+	v22.TexCoord = { 1, 1 };
+	v23.Position = { -0.5, -0.5f, -1.0f };
+	v23.Normal = { 0, -1, 0 };
+	v23.TexCoord = { 1, 0 };
+
+	vertices.push_back(v20);
+	vertices.push_back(v21);
+	vertices.push_back(v22);
+	vertices.push_back(v23);
+
+
+	indices.push_back(20);
+	indices.push_back(23);
+	indices.push_back(21);
+
+	indices.push_back(21);
+	indices.push_back(23);
+	indices.push_back(22);
+
+
 
 	// Vertex array descriptor
 	D3D11_BUFFER_DESC vertexbufferDesc{ 0 };

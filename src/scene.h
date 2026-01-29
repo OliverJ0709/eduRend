@@ -13,6 +13,7 @@
 #include "Model.h"
 #include "Texture.h"
 #include "buffers.h"
+#include "cube.h"
 
 /**
  * @brief Abstract class defining scene rendering and updating.
@@ -87,6 +88,18 @@ class OurTestScene : public Scene
 
 	Model* m_quad;
 	Model* m_sponza;
+
+	Cube* m_child1;
+	Cube* m_child2;
+	Cube* m_child3;
+
+	mat4f m_child1_local;
+	mat4f m_child2_local;
+	mat4f m_child3_local;
+
+	mat4f m_child1_world;
+	mat4f m_child2_world;
+	mat4f m_child3_world;
 
 	mat4f m_sponza_transform;
 	mat4f m_quad_transform;
